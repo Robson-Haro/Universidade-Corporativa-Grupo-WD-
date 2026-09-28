@@ -1455,3 +1455,30 @@ a {
   color: var(--uc-muted);
   font-size: 12px;
 }
+
+.uc-score-summary {
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.uc-score-summary > div {
+  padding: 16px;
+  border-radius: 15px;
+  background: #eef2f3;
+}
+
+.uc-score-summary span {
+  display: block;
+  color: var(--uc-muted);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.uc-score-summary strong {
+  display: block;
+  margin-top: 5px;
+  font-size: 22px;
+}
