@@ -108,8 +108,8 @@ export default function HomeClient() {
 
         <div className="wduni-hero-image">
           <img
-            src={TRAINING_BASE + "/images/grupo-de-trabalho.webp"}
-            alt="Profissionais em atividade de desenvolvimento"
+            src="/images/hero-universidade-correta.jpg"
+            alt="Colaboradores do Grupo WD em destaque"
           />
           <div className="wduni-image-caption">
             <span>PESSOAS</span>
