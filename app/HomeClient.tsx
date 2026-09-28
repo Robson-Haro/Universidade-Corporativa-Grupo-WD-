@@ -1,83 +1,32 @@
 "use client";
 
 import Link from "next/link";
-import { FormEvent, useEffect, useMemo, useState } from "react";
-import { futureTracks } from "@/lib/course-data";
+import { FormEvent, useEffect, useState } from "react";
 
 type Participant = { name: string; email: string };
-type ProgressItem = { status: string; score?: number; updated_at?: string };
-type ProgressMap = Record<string, ProgressItem>;
 
 const TRAINING_BASE = "https://treinamento-wd-1.vercel.app";
 
+const rows = [
+  { title: "Trilhas em destaque", count: 6, firstActive: true },
+  { title: "Desenvolvimento Profissional", count: 6 },
+  { title: "Saúde, Segurança e Qualidade", count: 6 },
+  { title: "Cultura e Pessoas", count: 6 },
+  { title: "Tecnologia e Inovação", count: 6 },
+];
+
 export default function HomeClient() {
   const [participant, setParticipant] = useState<Participant | null>(null);
-  const [progress, setProgress] = useState<ProgressMap>({});
   const [showIdentity, setShowIdentity] = useState(false);
-  const [search, setSearch] = useState("");
 
   useEffect(() => {
     try {
       const savedParticipant = localStorage.getItem("wd_uc_participant");
-      const savedProgress = localStorage.getItem("wd_uc_progress");
       if (savedParticipant) setParticipant(JSON.parse(savedParticipant));
-      if (savedProgress) setProgress(JSON.parse(savedProgress));
     } catch {
-      // Mantém a experiência funcional mesmo sem armazenamento local.
+      // Mantém a experiência disponível mesmo sem armazenamento local.
     }
   }, []);
-
-  useEffect(() => {
-    if (!participant?.email) return;
-    fetch("/api/universidade?email=" + encodeURIComponent(participant.email))
-      .then((response) => (response.ok ? response.json() : null))
-      .then((data) => {
-        if (!data?.progress?.length) return;
-        const remote: ProgressMap = {};
-        for (const item of data.progress as Array<{
-          module_id: string;
-          status: string;
-          score?: number;
-          updated_at?: string;
-        }>) {
-          remote[item.module_id] = {
-            status: item.status,
-            score: item.score,
-            updated_at: item.updated_at,
-          };
-        }
-        setProgress((current) => {
-          const next = { ...current, ...remote };
-          localStorage.setItem("wd_uc_progress", JSON.stringify(next));
-          return next;
-        });
-      })
-      .catch(() => undefined);
-  }, [participant]);
-
-  const completed = useMemo(
-    () =>
-      Object.values(progress).filter(
-        (item) => item.status === "passed" || item.status === "completed",
-      ).length,
-    [progress],
-  );
-
-  const searchableTracks = [
-    {
-      id: "lideranca",
-      number: "01",
-      title: "Jornada de Liderança",
-      description:
-        "Autoconhecimento, comunicação e excelência para quem lidera pessoas e operações.",
-      active: true,
-    },
-    ...futureTracks.map((track) => ({ ...track, active: false })),
-  ].filter((track) =>
-    (track.title + " " + track.description)
-      .toLowerCase()
-      .includes(search.toLowerCase()),
-  );
 
   function saveIdentity(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -86,7 +35,9 @@ export default function HomeClient() {
       name: String(data.get("name") || "").trim(),
       email: String(data.get("email") || "").trim().toLowerCase(),
     };
+
     if (next.name.length < 3 || !next.email.includes("@")) return;
+
     localStorage.setItem("wd_uc_participant", JSON.stringify(next));
     setParticipant(next);
     setShowIdentity(false);
@@ -99,244 +50,160 @@ export default function HomeClient() {
   }
 
   return (
-    <main className="uc-page">
-      <div className="uc-bg-hex uc-bg-hex-one" aria-hidden="true" />
-      <div className="uc-bg-hex uc-bg-hex-two" aria-hidden="true" />
+    <main className="wduni-page">
+      <div className="wduni-ambient wduni-ambient-left" aria-hidden="true" />
+      <div className="wduni-ambient wduni-ambient-right" aria-hidden="true" />
 
-      <header className="uc-header">
-        <Link href="/" className="uc-brand" aria-label="Universidade Corporativa Grupo WD">
+      <header className="wduni-topbar">
+        <Link href="/" className="wduni-brand">
           <img src={TRAINING_BASE + "/grupo-wd.png"} alt="Grupo WD" />
           <span>
-            <strong>Universidade Corporativa</strong>
-            <small>Grupo WD</small>
+            <strong>GRUPO WD</strong>
+            <small>UNIVERSIDADE CORPORATIVA</small>
           </span>
         </Link>
 
-        <nav className="uc-nav" aria-label="Navegação principal">
-          <Link href="/" className="is-active">Início</Link>
-          <a href="#trilhas">Trilhas</a>
-          <Link href="/jornada-lideranca">Meus Cursos</Link>
-          <Link href="/certificados">Certificados</Link>
+        <nav className="wduni-nav" aria-label="Navegação principal">
+          <Link className="is-active" href="/">⌂ <span>Início</span></Link>
+          <a href="#trilhas">◇ <span>Trilhas</span></a>
+          <Link href="/jornada-lideranca">▣ <span>Meus Cursos</span></Link>
+          <Link href="/certificados">◎ <span>Certificados</span></Link>
+          <a href="#trilhas">⌕ <span>Buscar</span></a>
         </nav>
 
-        <button
-          className="uc-profile"
-          type="button"
-          onClick={() => setShowIdentity(true)}
-        >
-          <span className="uc-avatar">
+        <button className="wduni-user" type="button" onClick={() => setShowIdentity(true)}>
+          <span className="wduni-user-avatar">
             {participant?.name?.slice(0, 1).toUpperCase() || "WD"}
           </span>
-          <span className="uc-profile-copy">
-            <small>{participant ? "Meu perfil" : "Acompanhar progresso"}</small>
-            <strong>{participant?.name || "Identificar-se"}</strong>
+          <span>
+            <strong>{participant ? "Olá, " + participant.name.split(" ")[0] : "Olá"}</strong>
+            <small>Juntos evoluímos</small>
           </span>
+          <span className="wduni-chevron">⌄</span>
         </button>
       </header>
 
-      <section className="uc-hero">
-        <div className="uc-hero-copy">
-          <span className="uc-kicker">Jornada do Conhecimento</span>
-          <h1>
-            Conhecimento que melhora a rotina.
-            <span> Desenvolvimento que transforma pessoas.</span>
-          </h1>
-          <p>
-            Um espaço único para aprender, praticar, acompanhar sua evolução e
-            construir novos padrões de excelência em todas as áreas do Grupo WD.
-          </p>
+      <section className="wduni-hero">
+        <div className="wduni-hero-copy">
+          <span className="wduni-eyebrow">UNIVERSIDADE CORPORATIVA</span>
+          <h1>Grupo WD</h1>
+          <p>Conhecimento que protege. Desenvolvimento que transforma.</p>
 
-          <div className="uc-hero-actions">
-            <Link className="uc-button uc-button-primary" href="/jornada-lideranca">
-              Continuar aprendendo <span>→</span>
+          <div className="wduni-actions">
+            <Link className="wduni-btn wduni-btn-dark" href="/jornada-lideranca">
+              ▶ <span>Continuar</span>
             </Link>
-            <a className="uc-button uc-button-secondary" href="#trilhas">
-              Explorar trilhas
+            <a className="wduni-btn wduni-btn-light" href="#trilhas">
+              ◌ <span>Ver trilha</span>
             </a>
           </div>
 
-          <div className="uc-stats">
-            <div>
-              <strong>2</strong>
-              <span>módulos disponíveis</span>
-            </div>
-            <div>
-              <strong>{completed}</strong>
-              <span>etapas concluídas</span>
-            </div>
-            <div>
-              <strong>1</strong>
-              <span>jornada ativa</span>
-            </div>
+          <div className="wduni-mini-values">
+            <span>PESSOAS</span>
+            <span>PROCESSOS</span>
+            <span>SEGURANÇA</span>
+            <span>UM FUTURO MAIS FORTE</span>
           </div>
         </div>
 
-        <div className="uc-hero-visual">
-          <div className="uc-photo-card">
-            <img
-              src={TRAINING_BASE + "/images/grupo-de-trabalho.webp"}
-              alt="Profissionais do Grupo WD em uma atividade de desenvolvimento"
-            />
-            <div className="uc-photo-overlay">
-              <span>Aprender · Aplicar · Evoluir</span>
-              <strong>Todos fazem parte da Jornada do Conhecimento.</strong>
-            </div>
-          </div>
-          <div className="uc-floating-hex uc-floating-a">Pessoas</div>
-          <div className="uc-floating-hex uc-floating-b">Cliente</div>
-          <div className="uc-floating-hex uc-floating-c">Excelência</div>
-        </div>
-      </section>
-
-      <section className="uc-dashboard-strip" aria-label="Painel rápido">
-        <div className="uc-greeting">
-          <span>
-            Olá{participant ? ", " + participant.name.split(" ")[0] : ""}
-          </span>
-          <strong>Onde você quer evoluir hoje?</strong>
-        </div>
-        <label className="uc-search">
-          <span aria-hidden="true">⌕</span>
-          <input
-            value={search}
-            onChange={(event) => setSearch(event.target.value)}
-            placeholder="Buscar trilhas e cursos"
-            aria-label="Buscar trilhas e cursos"
+        <div className="wduni-hero-image">
+          <img
+            src={TRAINING_BASE + "/images/grupo-de-trabalho.webp"}
+            alt="Profissionais em atividade de desenvolvimento"
           />
-        </label>
-      </section>
-
-      <section id="trilhas" className="uc-section">
-        <div className="uc-section-heading">
-          <div>
-            <span className="uc-kicker">Mapa de aprendizagem</span>
-            <h2>Trilhas em formato de colmeia</h2>
+          <div className="wduni-image-caption">
+            <span>PESSOAS</span>
+            <span>IDEIAS</span>
+            <span>APRENDIZAGEM</span>
+            <span>RESULTADOS</span>
           </div>
+        </div>
+
+        <aside className="wduni-feature">
+          <span className="wduni-feature-tag">TREINAMENTO EM DESTAQUE</span>
+          <h2>Jornada do <strong>Conhecimento</strong></h2>
           <p>
-            Cada célula representa uma jornada de desenvolvimento. A Jornada de
-            Liderança já está disponível; as demais trilhas ficam preparadas para
-            os próximos conteúdos da Universidade.
+            Aprendizado para todos os colaboradores. Mais conhecimento, mais oportunidades
+            e um futuro melhor para todos.
           </p>
-        </div>
-
-        <div className="uc-honeycomb">
-          {searchableTracks.map((track, index) => {
-            const content = (
-              <>
-                <span className="uc-hex-number">{track.number}</span>
-                <span className="uc-hex-status">
-                  {track.active ? "Disponível" : "Em preparação"}
-                </span>
-                <h3>{track.title}</h3>
-                <p>{track.description}</p>
-                <span className="uc-hex-link">
-                  {track.active ? "Acessar jornada →" : "Em breve"}
-                </span>
-              </>
-            );
-
-            const className = [
-              "uc-hex-card",
-              track.active ? "is-active" : "is-muted",
-              index % 2 ? "is-offset" : "",
-            ]
-              .filter(Boolean)
-              .join(" ");
-
-            return track.active ? (
-              <Link key={track.id} href="/jornada-lideranca" className={className}>
-                {content}
-              </Link>
-            ) : (
-              <div key={track.id} className={className}>
-                {content}
-              </div>
-            );
-          })}
-        </div>
-      </section>
-
-      <section className="uc-section uc-continue">
-        <div className="uc-section-heading">
-          <div>
-            <span className="uc-kicker">Continue aprendendo</span>
-            <h2>Jornada de Liderança</h2>
-          </div>
-          <Link className="uc-inline-link" href="/jornada-lideranca">
-            Ver jornada completa →
+          <Link className="wduni-feature-btn" href="/jornada-lideranca">
+            Comece agora <span>→</span>
           </Link>
-        </div>
-
-        <div className="uc-course-grid">
-          <article className="uc-course-card">
-            <span className="uc-pill">Módulo 1</span>
-            <h3>Se conhecendo para liderar</h3>
-            <p>Autoconhecimento, DISC, decisões, estratégia e responsabilidade.</p>
-            <div className="uc-progress">
-              <span
-                style={{
-                  width:
-                    progress["modulo-1"]?.status === "passed"
-                      ? "100%"
-                      : progress["modulo-1"]
-                        ? "62%"
-                        : "12%",
-                }}
-              />
-            </div>
-            <Link href="/jornada-lideranca/modulo-1">Acessar módulo</Link>
-          </article>
-
-          <article className="uc-course-card">
-            <span className="uc-pill">Módulo 2</span>
-            <h3>Comunicação e Excelência</h3>
-            <p>
-              Comunicação, influência, segurança psicológica e excelência operacional.
-            </p>
-            <div className="uc-progress">
-              <span
-                style={{
-                  width:
-                    progress["modulo-2"]?.status === "passed"
-                      ? "100%"
-                      : progress["modulo-2"]
-                        ? "62%"
-                        : "6%",
-                }}
-              />
-            </div>
-            <Link href="/jornada-lideranca/modulo-2">Acessar módulo</Link>
-          </article>
-
-          <article className="uc-course-card uc-course-card-dark">
-            <span className="uc-pill">Certificação</span>
-            <h3>Jornada de Liderança</h3>
-            <p>
-              Conclua os dois módulos e as avaliações para liberar seu certificado.
-            </p>
-            <Link href="/certificados">Ver certificados</Link>
-          </article>
-        </div>
+          <div className="wduni-feature-quote">
+            <span>LÍDERES</span>
+            <span>CONSTROEM</span>
+            <span>PESSOAS</span>
+            <span>QUE VÃO MAIS LONGE</span>
+          </div>
+        </aside>
       </section>
 
-      <section className="uc-banner">
+      <section id="trilhas" className="wduni-learning-area">
+        {rows.map((row, rowIndex) => (
+          <div className="wduni-course-section" key={row.title}>
+            <div className="wduni-section-title">
+              <h2>{row.title}</h2>
+              <span>→</span>
+            </div>
+
+            <div className="wduni-hex-row">
+              {Array.from({ length: row.count }).map((_, index) => {
+                const active = rowIndex === 0 && index === 0;
+
+                if (active) {
+                  return (
+                    <Link
+                      key={"active-" + index}
+                      href="/jornada-lideranca"
+                      className="wduni-course-hex wduni-course-active"
+                    >
+                      <div className="wduni-course-image">
+                        <img
+                          src={TRAINING_BASE + "/images/grupo-de-trabalho.webp"}
+                          alt=""
+                        />
+                      </div>
+                      <div className="wduni-course-copy">
+                        <strong>Jornada de Liderança</strong>
+                        <div className="wduni-progress">
+                          <span style={{ width: "18%" }} />
+                        </div>
+                        <small>Disponível</small>
+                      </div>
+                    </Link>
+                  );
+                }
+
+                return (
+                  <div className="wduni-course-hex wduni-course-soon" key={row.title + "-" + index}>
+                    <div className="wduni-lock">⌑</div>
+                    <strong>Curso em breve</strong>
+                    <small>Novos conteúdos serão liberados aqui</small>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        ))}
+      </section>
+
+      <aside className="wduni-side-quote">
+        <span className="wduni-quote-mark">“</span>
+        <p>
+          PESSOAS<br />
+          QUE APRENDEM<br />
+          HOJE,<br />
+          CONSTROEM<br />
+          UM AMANHÃ<br />
+          EXTRAORDINÁRIO.
+        </p>
+        <div />
+        <strong>GRUPO WD</strong>
+        <small>JUNTOS EVOLUÍMOS SEMPRE</small>
+      </aside>
+
+      <footer className="wduni-footer">
         <div>
-          <span className="uc-kicker">Universidade Corporativa Grupo WD</span>
-          <h2>Aprender para fazer melhor.</h2>
-          <p>
-            A Universidade nasce para transformar conhecimento em comportamento
-            observável, padrão de execução e desenvolvimento contínuo.
-          </p>
-        </div>
-        <div className="uc-banner-logos">
-          <img src={TRAINING_BASE + "/grupo-wd.png"} alt="Grupo WD" />
-          <span>×</span>
-          <img src={TRAINING_BASE + "/ramos-consultoria.png"} alt="Ramos Consultoria" />
-        </div>
-      </section>
-
-      <footer className="uc-footer">
-        <div className="uc-footer-brand">
           <img src={TRAINING_BASE + "/grupo-wd.png"} alt="" />
           <span>Universidade Corporativa Grupo WD</span>
         </div>
@@ -365,8 +232,8 @@ export default function HomeClient() {
             <span className="uc-kicker">Sua Jornada do Conhecimento</span>
             <h2>Identifique-se para acompanhar sua evolução</h2>
             <p>
-              Use nome completo e e-mail. Essas informações serão usadas no
-              histórico de aprendizagem, nas avaliações e nos certificados.
+              Use nome completo e e-mail. Essas informações serão usadas no histórico
+              de aprendizagem, nas avaliações e nos certificados.
             </p>
             <label>
               Nome completo
