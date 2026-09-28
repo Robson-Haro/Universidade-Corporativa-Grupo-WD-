@@ -1482,3 +1482,748 @@ a {
   margin-top: 5px;
   font-size: 22px;
 }
+
+
+/* =========================================================
+   HOME 2026 — UNIVERSIDADE CORPORATIVA GRUPO WD
+   Inspirada no dashboard de referência aprovado.
+   ========================================================= */
+
+.wduni-page {
+  --wduni-ink: #101820;
+  --wduni-muted: #66717b;
+  --wduni-line: rgba(44, 60, 74, .10);
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+  color: var(--wduni-ink);
+  background:
+    radial-gradient(circle at 12% 8%, rgba(207, 216, 222, .38), transparent 26%),
+    radial-gradient(circle at 90% 6%, rgba(203, 214, 222, .42), transparent 28%),
+    linear-gradient(180deg, #fbfcfd 0%, #f4f7f9 48%, #eef3f6 100%);
+}
+
+.wduni-page::before,
+.wduni-page::after {
+  content: "";
+  position: fixed;
+  pointer-events: none;
+  z-index: 0;
+  opacity: .56;
+  border: 1px solid rgba(142, 157, 168, .15);
+  clip-path: polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%);
+}
+
+.wduni-page::before {
+  width: 270px;
+  height: 235px;
+  left: -135px;
+  top: 120px;
+  background: rgba(255,255,255,.30);
+}
+
+.wduni-page::after {
+  width: 330px;
+  height: 286px;
+  right: -150px;
+  top: 360px;
+  background: rgba(255,255,255,.34);
+}
+
+.wduni-ambient {
+  position: fixed;
+  width: 460px;
+  height: 460px;
+  border-radius: 50%;
+  filter: blur(60px);
+  pointer-events: none;
+  opacity: .32;
+  z-index: 0;
+}
+
+.wduni-ambient-left {
+  left: -220px;
+  top: 120px;
+  background: #dbe5eb;
+}
+
+.wduni-ambient-right {
+  right: -210px;
+  bottom: 40px;
+  background: #dfe8ed;
+}
+
+.wduni-topbar {
+  width: min(1510px, calc(100% - 34px));
+  min-height: 76px;
+  margin: 0 auto;
+  padding: 9px 18px;
+  position: relative;
+  z-index: 20;
+  display: grid;
+  grid-template-columns: 310px 1fr 255px;
+  align-items: center;
+  gap: 18px;
+  border-bottom: 1px solid rgba(34, 51, 65, .08);
+  background: rgba(250, 252, 253, .84);
+  backdrop-filter: blur(22px);
+}
+
+.wduni-brand {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  text-decoration: none;
+  color: var(--wduni-ink);
+}
+
+.wduni-brand img {
+  width: 63px;
+  height: 52px;
+  object-fit: contain;
+  filter: grayscale(1) contrast(1.08);
+}
+
+.wduni-brand > span {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.wduni-brand strong {
+  font-size: 15px;
+  letter-spacing: .11em;
+}
+
+.wduni-brand small {
+  margin-top: 4px;
+  font-size: 10px;
+  letter-spacing: .18em;
+}
+
+.wduni-nav {
+  justify-self: center;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.wduni-nav a {
+  min-height: 42px;
+  padding: 0 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: 9px;
+  text-decoration: none;
+  color: #33414d;
+  font-size: 12px;
+  font-weight: 730;
+  transition: .18s ease;
+}
+
+.wduni-nav a:hover,
+.wduni-nav a.is-active {
+  color: #0c1720;
+  background: rgba(225, 232, 237, .78);
+}
+
+.wduni-nav a.is-active {
+  position: relative;
+}
+
+.wduni-nav a.is-active::after {
+  content: "";
+  position: absolute;
+  left: 17px;
+  right: 17px;
+  bottom: -5px;
+  height: 2px;
+  border-radius: 999px;
+  background: #1b2b37;
+}
+
+.wduni-user {
+  justify-self: end;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  color: var(--wduni-ink);
+  text-align: left;
+}
+
+.wduni-user-avatar {
+  width: 39px;
+  height: 39px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #1b2833, #445764);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.wduni-user > span:nth-child(2) {
+  display: flex;
+  flex-direction: column;
+}
+
+.wduni-user strong {
+  font-size: 12px;
+}
+
+.wduni-user small {
+  margin-top: 2px;
+  color: #77838c;
+  font-size: 9px;
+}
+
+.wduni-chevron {
+  color: #72808a;
+  font-size: 16px;
+}
+
+.wduni-hero {
+  width: min(1510px, calc(100% - 34px));
+  min-height: 330px;
+  margin: 0 auto;
+  padding: 18px 18px 12px;
+  position: relative;
+  z-index: 3;
+  display: grid;
+  grid-template-columns: .92fr 1.02fr .88fr;
+  gap: 18px;
+  align-items: stretch;
+}
+
+.wduni-hero-copy {
+  min-height: 300px;
+  padding: 26px 12px 18px 36px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.wduni-eyebrow {
+  color: #4b5c67;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .32em;
+}
+
+.wduni-hero-copy h1 {
+  margin: 3px 0 3px;
+  font-size: clamp(52px, 5.2vw, 82px);
+  line-height: .94;
+  letter-spacing: -.058em;
+}
+
+.wduni-hero-copy > p {
+  max-width: 540px;
+  margin: 8px 0 0;
+  color: #465761;
+  font-size: 15px;
+  letter-spacing: .01em;
+}
+
+.wduni-actions {
+  margin-top: 22px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.wduni-btn {
+  min-height: 48px;
+  padding: 0 22px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  border-radius: 11px;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 800;
+  transition: .18s ease;
+}
+
+.wduni-btn:hover {
+  transform: translateY(-2px);
+}
+
+.wduni-btn-dark {
+  background: #152532;
+  color: white;
+  box-shadow: 0 13px 26px rgba(19, 36, 49, .18);
+}
+
+.wduni-btn-light {
+  border: 1px solid rgba(62, 81, 95, .10);
+  background: rgba(255,255,255,.72);
+  color: #1e303e;
+  box-shadow: 0 10px 26px rgba(40, 58, 70, .08);
+}
+
+.wduni-mini-values {
+  margin-top: 20px;
+  padding-left: 18px;
+  display: grid;
+  gap: 3px;
+  border-left: 1px solid rgba(59, 77, 90, .22);
+  color: #657681;
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: .18em;
+}
+
+.wduni-hero-image {
+  min-height: 300px;
+  position: relative;
+  overflow: hidden;
+  clip-path: polygon(12% 0, 92% 0, 100% 50%, 92% 100%, 12% 100%, 0 50%);
+  background: #dfe7ec;
+  box-shadow: 0 20px 42px rgba(44, 61, 72, .12);
+}
+
+.wduni-hero-image::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(11, 27, 40, .18), transparent 48%, rgba(255,255,255,.08));
+}
+
+.wduni-hero-image img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.wduni-image-caption {
+  position: absolute;
+  left: 34px;
+  bottom: 27px;
+  z-index: 3;
+  display: grid;
+  gap: 2px;
+  color: white;
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: .17em;
+  text-shadow: 0 1px 3px rgba(0,0,0,.3);
+}
+
+.wduni-feature {
+  min-height: 300px;
+  padding: 28px 50px 24px 32px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  clip-path: polygon(0 0, 84% 0, 100% 50%, 84% 100%, 0 100%, 10% 50%);
+  background:
+    linear-gradient(135deg, rgba(255,255,255,.9), rgba(236,242,246,.82)),
+    radial-gradient(circle at 100% 0, rgba(207,218,226,.8), transparent 48%);
+  box-shadow: 0 20px 42px rgba(44, 61, 72, .08);
+}
+
+.wduni-feature::after {
+  content: "";
+  position: absolute;
+  right: -25px;
+  top: -10px;
+  width: 180px;
+  height: 130px;
+  opacity: .36;
+  background:
+    linear-gradient(155deg, transparent 44%, rgba(100,119,132,.24) 45%, rgba(100,119,132,.24) 47%, transparent 48%),
+    linear-gradient(25deg, transparent 44%, rgba(100,119,132,.18) 45%, rgba(100,119,132,.18) 47%, transparent 48%);
+}
+
+.wduni-feature-tag {
+  width: fit-content;
+  padding: 5px 9px;
+  border-radius: 6px;
+  background: #e8edf0;
+  color: #6b7983;
+  font-size: 7px;
+  font-weight: 900;
+  letter-spacing: .16em;
+}
+
+.wduni-feature h2 {
+  max-width: 330px;
+  margin: 10px 0 5px;
+  font-size: clamp(30px, 2.7vw, 44px);
+  line-height: .94;
+  letter-spacing: -.045em;
+  font-weight: 450;
+}
+
+.wduni-feature h2 strong {
+  font-weight: 900;
+}
+
+.wduni-feature > p {
+  max-width: 390px;
+  margin: 7px 0 0;
+  color: #50616c;
+  font-size: 12px;
+  line-height: 1.36;
+}
+
+.wduni-feature-btn {
+  width: fit-content;
+  min-height: 39px;
+  margin-top: 14px;
+  padding: 0 15px;
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  border-radius: 7px;
+  background: #172936;
+  color: white;
+  text-decoration: none;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.wduni-feature-quote {
+  position: absolute;
+  right: 24px;
+  bottom: 22px;
+  display: grid;
+  gap: 1px;
+  color: #7a8993;
+  font-size: 7px;
+  font-weight: 800;
+  letter-spacing: .17em;
+}
+
+.wduni-learning-area {
+  width: min(1430px, calc(100% - 110px));
+  margin: 2px auto 0;
+  padding-right: 150px;
+  position: relative;
+  z-index: 4;
+}
+
+.wduni-course-section {
+  margin-top: 11px;
+}
+
+.wduni-section-title {
+  min-height: 27px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.wduni-section-title h2 {
+  margin: 0;
+  font-size: 18px;
+  letter-spacing: -.025em;
+}
+
+.wduni-section-title > span {
+  color: #60717d;
+  font-size: 20px;
+}
+
+.wduni-hex-row {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(145px, 1fr));
+  gap: 8px;
+  align-items: center;
+}
+
+.wduni-course-hex {
+  min-height: 88px;
+  padding: 11px 16px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  clip-path: polygon(12% 0, 88% 0, 100% 50%, 88% 100%, 12% 100%, 0 50%);
+  border: 1px solid rgba(255,255,255,.96);
+  background: rgba(255,255,255,.78);
+  box-shadow: 0 10px 20px rgba(52,69,79,.07);
+  color: #172631;
+  text-decoration: none;
+  transition: .18s ease;
+}
+
+.wduni-course-active:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 28px rgba(52,69,79,.12);
+}
+
+.wduni-course-image {
+  width: 43%;
+  align-self: stretch;
+  margin: -11px 0 -11px -16px;
+  overflow: hidden;
+  clip-path: polygon(0 0, 82% 0, 100% 50%, 82% 100%, 0 100%);
+}
+
+.wduni-course-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(.62) contrast(.96);
+}
+
+.wduni-course-copy {
+  flex: 1;
+  min-width: 0;
+}
+
+.wduni-course-copy strong,
+.wduni-course-soon strong {
+  display: block;
+  font-size: 11px;
+  line-height: 1.14;
+}
+
+.wduni-course-copy small,
+.wduni-course-soon small {
+  display: block;
+  margin-top: 4px;
+  color: #7d8a93;
+  font-size: 8px;
+}
+
+.wduni-progress {
+  height: 4px;
+  margin-top: 11px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #dbe3e7;
+}
+
+.wduni-progress span {
+  height: 100%;
+  display: block;
+  border-radius: inherit;
+  background: #172b38;
+}
+
+.wduni-course-soon {
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  color: #4d5f6b;
+  background: rgba(248,250,251,.72);
+}
+
+.wduni-lock {
+  color: #2e4555;
+  font-size: 17px;
+  line-height: 1;
+}
+
+.wduni-side-quote {
+  width: 118px;
+  position: absolute;
+  top: 650px;
+  right: max(22px, calc((100vw - 1510px) / 2 + 12px));
+  z-index: 5;
+  color: #7b8c97;
+}
+
+.wduni-quote-mark {
+  display: block;
+  color: #aab6be;
+  font-size: 38px;
+  line-height: .7;
+}
+
+.wduni-side-quote p {
+  margin: 11px 0 0;
+  font-size: 7px;
+  line-height: 1.62;
+  font-weight: 800;
+  letter-spacing: .22em;
+}
+
+.wduni-side-quote > div {
+  width: 18px;
+  height: 1px;
+  margin: 14px 0;
+  background: #8898a3;
+}
+
+.wduni-side-quote strong {
+  display: block;
+  color: #263946;
+  font-size: 8px;
+  letter-spacing: .17em;
+}
+
+.wduni-side-quote small {
+  display: block;
+  margin-top: 3px;
+  font-size: 6px;
+  letter-spacing: .15em;
+}
+
+.wduni-footer {
+  width: min(1510px, calc(100% - 34px));
+  margin: 26px auto 0;
+  padding: 18px 24px 24px;
+  position: relative;
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid rgba(42,60,73,.09);
+  color: #73828c;
+  font-size: 9px;
+}
+
+.wduni-footer > div {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  color: #273a47;
+  font-weight: 800;
+}
+
+.wduni-footer img {
+  width: 40px;
+  height: 33px;
+  object-fit: contain;
+  filter: grayscale(1);
+}
+
+@media (max-width: 1220px) {
+  .wduni-topbar {
+    grid-template-columns: 240px 1fr 190px;
+  }
+
+  .wduni-nav a {
+    padding: 0 9px;
+  }
+
+  .wduni-hero {
+    grid-template-columns: .9fr 1.05fr;
+  }
+
+  .wduni-feature {
+    grid-column: 1 / -1;
+    min-height: 190px;
+    clip-path: polygon(0 0, 95% 0, 100% 50%, 95% 100%, 0 100%, 3% 50%);
+  }
+
+  .wduni-learning-area {
+    width: calc(100% - 34px);
+    padding-right: 0;
+  }
+
+  .wduni-hex-row {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .wduni-side-quote {
+    display: none;
+  }
+}
+
+@media (max-width: 820px) {
+  .wduni-topbar {
+    grid-template-columns: 1fr auto;
+    min-height: 66px;
+  }
+
+  .wduni-nav {
+    display: none;
+  }
+
+  .wduni-brand strong {
+    font-size: 12px;
+  }
+
+  .wduni-brand small {
+    font-size: 8px;
+  }
+
+  .wduni-user > span:nth-child(2),
+  .wduni-chevron {
+    display: none;
+  }
+
+  .wduni-hero {
+    grid-template-columns: 1fr;
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+
+  .wduni-hero-copy {
+    min-height: auto;
+    padding: 30px 18px 18px;
+  }
+
+  .wduni-hero-copy h1 {
+    font-size: 58px;
+  }
+
+  .wduni-hero-image {
+    min-height: 270px;
+  }
+
+  .wduni-feature {
+    min-height: 240px;
+    padding: 28px;
+    clip-path: polygon(0 0, 92% 0, 100% 50%, 92% 100%, 0 100%, 5% 50%);
+  }
+
+  .wduni-feature-quote {
+    display: none;
+  }
+
+  .wduni-learning-area {
+    width: calc(100% - 24px);
+  }
+
+  .wduni-hex-row {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .wduni-section-title h2 {
+    font-size: 16px;
+  }
+
+  .wduni-course-hex {
+    min-height: 94px;
+  }
+}
+
+@media (max-width: 520px) {
+  .wduni-brand img {
+    width: 48px;
+    height: 40px;
+  }
+
+  .wduni-hero-copy h1 {
+    font-size: 48px;
+  }
+
+  .wduni-hex-row {
+    grid-template-columns: 1fr;
+  }
+
+  .wduni-course-hex {
+    min-height: 92px;
+  }
+
+  .wduni-footer {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 8px;
+  }
+}
