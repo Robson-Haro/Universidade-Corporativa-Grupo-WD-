@@ -2247,3 +2247,45 @@ a {
   object-position: center;
   display: block;
 }
+
+
+/* Padronização final do menu da Universidade */
+.wduni-nav {
+  width: min(620px, 100%);
+  display: grid !important;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 7px;
+  align-items: center;
+  justify-self: center;
+}
+
+.wduni-nav a {
+  width: 100%;
+  height: 44px;
+  min-height: 44px;
+  padding: 0 8px !important;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-sizing: border-box;
+  white-space: nowrap;
+  border-radius: 10px;
+}
+
+.wduni-nav a.is-active::after {
+  left: 18px;
+  right: 18px;
+}
+
+@media (max-width: 1220px) {
+  .wduni-nav {
+    width: min(560px, 100%);
+    gap: 5px;
+  }
+
+  .wduni-nav a {
+    padding: 0 5px !important;
+    font-size: 11px;
+  }
+}
