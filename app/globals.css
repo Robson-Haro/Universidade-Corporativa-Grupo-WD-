@@ -2227,3 +2227,23 @@ a {
     gap: 8px;
   }
 }
+
+
+/* Ajuste final do hero da Universidade */
+.wduni-hero-image {
+  background: transparent !important;
+  min-height: 320px;
+  height: 320px;
+}
+
+.wduni-hero-image::after {
+  background: transparent !important;
+}
+
+.wduni-hero-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
