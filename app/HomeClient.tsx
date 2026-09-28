@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { FormEvent, useEffect, useState } from "react";
+import { type FormEvent, type KeyboardEvent, useEffect, useRef, useState } from "react";
+import { type AccessRole, canContinueAccess, createParticipantSession } from "@/lib/access";
 
 type Participant = { name: string; email: string };
 
@@ -18,39 +19,103 @@ const rows = [
 export default function HomeClient() {
   const [participant, setParticipant] = useState<Participant | null>(null);
   const [showIdentity, setShowIdentity] = useState(false);
+  const [accessRole, setAccessRole] = useState<AccessRole>("collaborator");
+  const accessTriggerRef = useRef<HTMLButtonElement>(null);
+  const accessModalRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
-    try {
-      const savedParticipant = localStorage.getItem("wd_uc_participant");
-      if (savedParticipant) setParticipant(JSON.parse(savedParticipant));
-    } catch {
-      // Mantém a experiência disponível mesmo sem armazenamento local.
-    }
+    const frame = window.requestAnimationFrame(() => {
+      try {
+        const savedParticipant = localStorage.getItem("wd_uc_participant");
+        if (savedParticipant) setParticipant(JSON.parse(savedParticipant));
+
+        const savedRole = localStorage.getItem("wd_uc_access_role");
+        if (savedRole === "collaborator" || savedRole === "administrator") {
+          setAccessRole(savedRole);
+        }
+      } catch {
+        // Mantém a experiência disponível mesmo sem armazenamento local.
+      }
+    });
+
+    return () => window.cancelAnimationFrame(frame);
   }, []);
+
+  useEffect(() => {
+    if (!showIdentity) return;
+
+    const frame = window.requestAnimationFrame(() => {
+      accessModalRef.current?.querySelector<HTMLElement>("button, input")?.focus();
+    });
+
+    return () => window.cancelAnimationFrame(frame);
+  }, [showIdentity]);
+
+  function closeIdentity() {
+    setShowIdentity(false);
+    window.requestAnimationFrame(() => accessTriggerRef.current?.focus());
+  }
+
+  function keepFocusInsideDialog(event: KeyboardEvent<HTMLFormElement>) {
+    if (event.key === "Escape") {
+      event.preventDefault();
+      closeIdentity();
+      return;
+    }
+
+    if (event.key !== "Tab") return;
+
+    const focusable = Array.from(
+      accessModalRef.current?.querySelectorAll<HTMLElement>(
+        'button:not([disabled]), input:not([type="hidden"]):not([disabled])',
+      ) ?? [],
+    ).filter((element) => element.offsetParent !== null);
+
+    const first = focusable[0];
+    const last = focusable.at(-1);
+
+    if (!first || !last) return;
+
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
+  }
 
   function saveIdentity(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    const next = {
-      name: String(data.get("name") || "").trim(),
-      email: String(data.get("email") || "").trim().toLowerCase(),
-    };
+    const email = String(data.get("email") || "");
+    const name = String(data.get("name") || "");
 
-    if (next.name.length < 3 || !next.email.includes("@")) return;
+    if (!canContinueAccess({ role: accessRole, name, email })) {
+      return;
+    }
+
+    const session = createParticipantSession({ role: accessRole, name, email });
+    const next = session.participant;
 
     localStorage.setItem("wd_uc_participant", JSON.stringify(next));
+    localStorage.setItem("wd_uc_access_role", session.role);
     setParticipant(next);
     setShowIdentity(false);
 
     fetch("/api/universidade", {
       method: "POST",
       headers: { "content-type": "application/json" },
-      body: JSON.stringify({ action: "participant", participant: next }),
+      body: JSON.stringify({ action: "participant", participant: next, role: session.role }),
     }).catch(() => undefined);
   }
 
   return (
     <main className="wduni-page">
+      <div className="wduni-honeycomb-field" aria-hidden="true" />
+      <div className="wduni-frosted-pane wduni-frosted-pane-one" aria-hidden="true" />
+      <div className="wduni-frosted-pane wduni-frosted-pane-two" aria-hidden="true" />
+      <div className="wduni-frosted-pane wduni-frosted-pane-three" aria-hidden="true" />
       <div className="wduni-ambient wduni-ambient-left" aria-hidden="true" />
       <div className="wduni-ambient wduni-ambient-right" aria-hidden="true" />
 
@@ -71,13 +136,18 @@ export default function HomeClient() {
           <a href="#trilhas">⌕ <span>Buscar</span></a>
         </nav>
 
-        <button className="wduni-user" type="button" onClick={() => setShowIdentity(true)}>
+        <button
+          ref={accessTriggerRef}
+          className="wduni-user"
+          type="button"
+          onClick={() => setShowIdentity(true)}
+        >
           <span className="wduni-user-avatar">
             {participant?.name?.slice(0, 1).toUpperCase() || "WD"}
           </span>
           <span>
-            <strong>{participant ? "Olá, " + participant.name.split(" ")[0] : "Olá"}</strong>
-            <small>Juntos evoluímos</small>
+            <strong>{participant ? "Olá, " + participant.name.split(" ")[0] : "Acessar"}</strong>
+            <small>{participant ? "Juntos evoluímos" : "Administradores e colaboradores"}</small>
           </span>
           <span className="wduni-chevron">⌄</span>
         </button>
@@ -213,28 +283,55 @@ export default function HomeClient() {
       {showIdentity ? (
         <div
           className="uc-modal-backdrop"
-          role="presentation"
-          onMouseDown={() => setShowIdentity(false)}
+          onMouseDown={closeIdentity}
         >
           <form
-            className="uc-modal"
+            ref={accessModalRef}
+            className="uc-modal wduni-access-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="wduni-access-title"
+            aria-describedby="wduni-access-description"
             onSubmit={saveIdentity}
             onMouseDown={(event) => event.stopPropagation()}
+            onKeyDown={keepFocusInsideDialog}
           >
             <button
               className="uc-modal-close"
               type="button"
-              onClick={() => setShowIdentity(false)}
+              onClick={closeIdentity}
               aria-label="Fechar"
             >
               ×
             </button>
-            <span className="uc-kicker">Sua Jornada do Conhecimento</span>
-            <h2>Identifique-se para acompanhar sua evolução</h2>
-            <p>
-              Use nome completo e e-mail. Essas informações serão usadas no histórico
-              de aprendizagem, nas avaliações e nos certificados.
+            <span className="uc-kicker">Área de entrada</span>
+            <h2 id="wduni-access-title">Escolha como entrar</h2>
+            <p id="wduni-access-description">
+              Selecione seu perfil e informe os dados para continuar. A validação corporativa
+              será integrada nesta área.
             </p>
+
+            <div className="wduni-access-roles" role="group" aria-label="Perfil de acesso">
+              <button
+                type="button"
+                className={accessRole === "collaborator" ? "is-selected" : ""}
+                aria-pressed={accessRole === "collaborator"}
+                onClick={() => setAccessRole("collaborator")}
+              >
+                <strong>Colaborador</strong>
+                <small>Continuar minha jornada</small>
+              </button>
+              <button
+                type="button"
+                className={accessRole === "administrator" ? "is-selected" : ""}
+                aria-pressed={accessRole === "administrator"}
+                onClick={() => setAccessRole("administrator")}
+              >
+                <strong>Administrador</strong>
+                <small>Perfil de gestão</small>
+              </button>
+            </div>
+
             <label>
               Nome completo
               <input
@@ -246,7 +343,7 @@ export default function HomeClient() {
               />
             </label>
             <label>
-              E-mail
+              E-mail corporativo
               <input
                 name="email"
                 type="email"
@@ -256,7 +353,7 @@ export default function HomeClient() {
               />
             </label>
             <button className="uc-button uc-button-primary" type="submit">
-              Salvar identificação
+              Continuar como {accessRole === "collaborator" ? "colaborador" : "administrador"}
             </button>
           </form>
         </div>
