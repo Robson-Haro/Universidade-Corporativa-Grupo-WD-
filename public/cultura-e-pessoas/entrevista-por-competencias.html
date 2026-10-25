@@ -4046,7 +4046,7 @@ function checkBiasEx3(el,choice,qIdx){
 
 // CANDIDATOS CASO 2 (PROJETOS)
 function decideCand2(cand, dec) {
-  const feedbackId = 'c2'+cand.substring(1)+'-feedback';
+  const feedbackId = 'c2'+({c1:'a',c2:'b',c3:'c'}[cand])+'-feedback';
   const fb = document.getElementById(feedbackId);
   
   
@@ -4075,7 +4075,7 @@ function decideCand2(cand, dec) {
 
 // CANDIDATOS CASO 3 (RH)
 function decideCand3(cand, dec) {
-  const feedbackId = 'c3'+cand.substring(1)+'-feedback';
+  const feedbackId = 'c3'+({c1:'a',c2:'b',c3:'c'}[cand])+'-feedback';
   const fb = document.getElementById(feedbackId);
   
   
