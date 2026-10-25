@@ -29,10 +29,9 @@ export default function JornadaLiderancaPage() {
           <span className="uc-kicker">Jornada do Conhecimento · Trilha ativa</span>
           <h1>Jornada de Liderança</h1>
           <p>
-            O TreinamentoWD1 passa a fazer parte da Universidade Corporativa como
-            uma jornada estruturada em dois módulos independentes. Cada módulo
-            mantém seu conteúdo original e recebe uma avaliação própria. A
-            certificação é liberada quando os dois módulos forem aprovados.
+            Três módulos separados, cada um com acesso próprio ao conteúdo completo,
+            incluindo aulas, vídeos e atividades. As avaliações e a certificação
+            disponíveis correspondem aos módulos 1 e 2.
           </p>
         </section>
 
@@ -71,12 +70,12 @@ export default function JornadaLiderancaPage() {
                   >
                     Entrar no módulo
                   </Link>
-                  <Link
+                  {module.number !== 3 && <Link
                     className="uc-button uc-button-secondary"
                     href={"/avaliacao/" + module.number}
                   >
                     {passed ? "Rever avaliação" : "Fazer avaliação"}
-                  </Link>
+                  </Link>}
                 </div>
               </article>
             );
@@ -86,7 +85,7 @@ export default function JornadaLiderancaPage() {
         <section className="uc-course-grid" style={{ marginTop: 24 }}>
           <article className="uc-course-card uc-course-card-dark">
             <span className="uc-pill">Etapa final</span>
-            <h3>Certificado da Jornada</h3>
+            <h3>Certificado · Módulos 1 e 2</h3>
             <p>
               Aprovação mínima de 70% nas avaliações do Módulo 1 e do Módulo 2.
             </p>

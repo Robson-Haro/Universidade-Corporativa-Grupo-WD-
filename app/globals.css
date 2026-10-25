@@ -2418,3 +2418,11 @@ a {
     font-size: 11px;
   }
 }
+
+/* Acesso aos três módulos e leitura ampliada na área das aulas. */
+.uc-module-grid { grid-template-columns:repeat(auto-fit,minmax(min(100%,360px),1fr)); }
+.uc-embed-toolbar { flex-wrap:wrap; width:calc(100% - 28px); }
+.uc-embed-title strong,.uc-embed-actions .uc-button,.uc-embed-actions select { font-family:inherit; font-size:32px; line-height:1.35; }
+.uc-embed-title small { font-size:24px; }
+.uc-embed-actions select { padding:10px 16px; border:1px solid #547761; border-radius:12px; background:#fff; color:#123d2c; max-width:100%; }
+.uc-embed-shell { width:calc(100% - 28px); }

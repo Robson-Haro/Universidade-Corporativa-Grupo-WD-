@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { TRAINING_BASE_URL } from "@/lib/course-data";
 
@@ -11,10 +12,11 @@ export default function ModuleFrame({
   title,
   trainingPath,
 }: {
-  moduleNumber: 1 | 2;
+  moduleNumber: 1 | 2 | 3;
   title: string;
   trainingPath: string;
 }) {
+  const router = useRouter();
   const [participant, setParticipant] = useState<Participant | null>(null);
 
   useEffect(() => {
@@ -49,6 +51,9 @@ export default function ModuleFrame({
         </div>
 
         <div className="uc-embed-actions">
+          <select aria-label="Selecionar módulo" value={moduleNumber} onChange={event => router.push("/jornada-lideranca/modulo-" + event.target.value)}>
+            <option value={1}>Módulo 1</option><option value={2}>Módulo 2</option><option value={3}>Módulo 3</option>
+          </select>
           <Link className="uc-button uc-button-secondary" href="/jornada-lideranca">
             ← Jornada
           </Link>
@@ -60,12 +65,12 @@ export default function ModuleFrame({
           >
             Abrir conteúdo em tela cheia
           </a>
-          <Link
+          {moduleNumber !== 3 && <Link
             className="uc-button uc-button-primary"
             href={"/avaliacao/" + moduleNumber}
           >
             Ir para avaliação →
-          </Link>
+          </Link>}
         </div>
       </header>
 

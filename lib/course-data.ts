@@ -2,8 +2,8 @@ export const TRAINING_BASE_URL =
   process.env.NEXT_PUBLIC_TRAINING_BASE_URL || "https://treinamento-wd-1.vercel.app";
 
 export type UniversityModule = {
-  id: "modulo-1" | "modulo-2";
-  number: 1 | 2;
+  id: "modulo-1" | "modulo-2" | "modulo-3";
+  number: 1 | 2 | 3;
   title: string;
   subtitle: string;
   description: string;
@@ -53,6 +53,14 @@ export const leadershipModules: UniversityModule[] = [
       "Leitura de sentimentos",
       "Excelência operacional",
     ],
+  },
+  {
+    id: "modulo-3", number: 3,
+    title: "Líder Desenvolve Líder",
+    subtitle: "Desenvolver pessoas e preparar novos líderes",
+    description: "Conteúdo completo com aulas, vídeos, atividades, exemplos de indicadores e encerramento do Módulo 3.",
+    trainingPath: "/modulo-3",
+    topics: ["Desenvolvimento humano e aprendizagem", "Delegação com propósito", "Prevenção de conflitos", "Tempo e prioridades", "Pensar como dono e indicadores", "Plano de desenvolvimento"],
   },
 ];
 

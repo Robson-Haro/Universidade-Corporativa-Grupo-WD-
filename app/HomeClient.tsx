@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { leadershipModules } from "@/lib/course-data";
 import { type FormEvent, type KeyboardEvent, useEffect, useRef, useState } from "react";
 import { type AccessRole, canContinueAccess, createParticipantSession } from "@/lib/access";
 
@@ -206,6 +207,17 @@ export default function HomeClient() {
             <span>QUE VÃO MAIS LONGE</span>
           </div>
         </aside>
+      </section>
+
+      <section className="uc-inner" aria-label="Módulos da Jornada de Liderança">
+        <h2>Jornada de Liderança · 3 módulos</h2>
+        <div className="uc-module-grid">
+          {leadershipModules.map(module => <article className="uc-module-panel" key={module.id}>
+            <span className="uc-pill">Módulo {module.number}</span>
+            <h2>{module.title}</h2><p>{module.description}</p>
+            <Link className="uc-button uc-button-primary" href={"/jornada-lideranca/" + module.id}>Acessar Módulo {module.number} →</Link>
+          </article>)}
+        </div>
       </section>
 
       <section id="trilhas" className="wduni-learning-area">
