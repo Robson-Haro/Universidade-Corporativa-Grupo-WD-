@@ -231,6 +231,12 @@ export default function HomeClient() {
             <div className="wduni-hex-row">
               {Array.from({ length: row.count }).map((_, index) => {
                 const active = rowIndex === 0 && index === 0;
+                if (row.title === "Cultura e Pessoas" && index === 0) {
+                  return <Link key="entrevista-competencias" href="/cultura-e-pessoas/entrevista-por-competencias.html" className="wduni-course-hex wduni-course-active">
+                    <div className="wduni-course-image"><img src={TRAINING_BASE + "/ramos-consultoria.png"} alt="Ramos Consultoria" style={{objectFit:"contain"}} /></div>
+                    <div className="wduni-course-copy"><strong>Entrevista por Competências</strong><small>Grupo WD · 12 módulos</small></div>
+                  </Link>;
+                }
 
                 if (active) {
                   return (
