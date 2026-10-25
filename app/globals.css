@@ -2487,3 +2487,5 @@ a {
 .wduni-course-soon small {color:#47535d}
 .wduni-footer {border-color:#4a535b40;color:#3b4650}
 .wduni-side-quote {color:#44515c}
+
+.wduni-feature { clip-path:polygon(0 0,84% 0,100% 50%,84% 100%,0 100%); padding-right:18%; }
