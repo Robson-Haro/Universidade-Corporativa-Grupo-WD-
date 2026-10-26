@@ -2489,3 +2489,30 @@ a {
 .wduni-side-quote {color:#44515c}
 
 .wduni-feature { clip-path:polygon(0 0,84% 0,100% 50%,84% 100%,0 100%); padding-right:18%; }
+
+/* Menu ampliado para leitura confortável em todas as larguras. */
+.wduni-nav {
+  width: 100%;
+  grid-template-columns: repeat(5, auto);
+}
+.wduni-nav a {
+  font-size: 20px;
+  line-height: 1.3;
+  height: auto;
+  min-height: 52px;
+  padding: 10px 8px !important;
+}
+@media (max-width: 1400px) {
+  .wduni-topbar { grid-template-columns: 1fr auto; }
+  .wduni-user { grid-column: 2; grid-row: 1; }
+  .wduni-nav {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    width: 100%;
+    display: flex !important;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+  }
+  .wduni-nav a { width: auto; flex: 0 1 auto; padding: 10px 14px !important; }
+}
