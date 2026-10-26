@@ -2596,3 +2596,9 @@ a {
   align-self: center;
 }
 .wduni-image-caption { font-size: 28px; }
+
+/* Destaque mais largo, sem aumentar a altura. */
+.wduni-hero-image { max-width: 680px; height: 360px; min-height: 360px; }
+@media (min-width:1201px) {
+  .wduni-hero { grid-template-columns: minmax(0,1fr) minmax(0,1.35fr) minmax(0,1fr); }
+}
