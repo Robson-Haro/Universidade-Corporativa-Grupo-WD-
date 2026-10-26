@@ -2633,3 +2633,11 @@ a {
   .wduni-hero-copy,.wduni-feature { min-height: 0; }
   .wduni-hero-image { min-height: 440px; }
 }
+
+/* Colmeia com enquadramento superior para preservar as cabeças. */
+.wduni-hero-image {
+  clip-path: polygon(10% 0,90% 0,100% 50%,90% 100%,10% 100%,0 50%);
+  border-radius: 0;
+}
+.wduni-hero-image img { object-position: center top; }
+.wduni-image-caption { left: 13%; right: 13%; }
