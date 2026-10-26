@@ -2602,3 +2602,34 @@ a {
 @media (min-width:1201px) {
   .wduni-hero { grid-template-columns: minmax(0,1fr) minmax(0,1.35fr) minmax(0,1fr); }
 }
+
+/* Três painéis alinhados e fotografia preenchendo todo o quadro. */
+.wduni-hero { align-items: stretch; }
+.wduni-hero-copy,.wduni-feature { min-height: 520px; box-sizing: border-box; }
+.wduni-hero-image {
+  width: 100%;
+  max-width: none;
+  height: auto;
+  min-height: 520px;
+  align-self: stretch;
+  aspect-ratio: auto;
+  clip-path: none;
+  border-radius: 24px;
+}
+.wduni-hero-image img { object-fit: cover; object-position: center; }
+.wduni-image-caption {
+  left: 24px;
+  right: 24px;
+  bottom: 24px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 20px;
+  font-size: 28px;
+  padding: 12px 16px;
+  border-radius: 12px;
+  background: rgba(24,29,34,.65);
+}
+@media(max-width:700px) {
+  .wduni-hero-copy,.wduni-feature { min-height: 0; }
+  .wduni-hero-image { min-height: 440px; }
+}
