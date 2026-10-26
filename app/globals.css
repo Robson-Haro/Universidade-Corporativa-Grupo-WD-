@@ -2516,3 +2516,42 @@ a {
   }
   .wduni-nav a { width: auto; flex: 0 1 auto; padding: 10px 14px !important; }
 }
+
+/* Home com leitura ampliada e distribuição por toda a tela. */
+.wduni-topbar,.wduni-hero,.wduni-learning-area,.wduni-footer {
+  width: calc(100% - 32px);
+  max-width: none;
+  box-sizing: border-box;
+}
+.wduni-hero { padding: 24px 0; gap: 24px; grid-template-columns: 1fr 1fr 1fr; }
+.wduni-hero-copy { padding: 32px; min-width: 0; }
+.wduni-hero-copy > p,.wduni-feature > p { font-size: 22px; line-height: 1.5; max-width: none; }
+.wduni-eyebrow,.wduni-mini-values,.wduni-image-caption,.wduni-feature-tag { font-size: 20px; line-height: 1.5; letter-spacing: .04em; }
+.wduni-btn,.wduni-feature-btn { font-size: 20px; min-height: 54px; padding: 12px 20px; }
+.wduni-feature { padding: 32px; clip-path: none; border-radius: 24px; min-width: 0; }
+.wduni-feature h2 { max-width: none; font-size: clamp(32px,3vw,48px); line-height: 1.1; overflow-wrap: anywhere; }
+.wduni-feature-quote { position: static; margin-top: 24px; font-size: 20px; line-height: 1.4; letter-spacing: .04em; }
+.wduni-learning-area { padding: 0; }
+.wduni-course-section { margin-top: 28px; }
+.wduni-section-title { margin-bottom: 14px; }
+.wduni-section-title h2 { font-size: 28px; line-height: 1.3; }
+.wduni-hex-row { grid-template-columns: repeat(auto-fit,minmax(min(100%,340px),1fr)); gap: 16px; align-items: stretch; }
+.wduni-course-hex { min-height: 180px; padding: 24px 13%; box-sizing: border-box; }
+.wduni-course-image { width: 30%; flex-shrink: 0; margin: 0; align-self: center; height: 110px; clip-path: none; border-radius: 12px; }
+.wduni-course-copy strong,.wduni-course-soon strong { font-size: 22px; line-height: 1.35; overflow-wrap: anywhere; }
+.wduni-course-copy small,.wduni-course-soon small { font-size: 20px; line-height: 1.4; }
+.wduni-lock { font-size: 24px; }
+.wduni-side-quote { position: relative; top: auto; right: auto; width: calc(100% - 64px); margin: 40px auto 0; text-align: center; }
+.wduni-side-quote p,.wduni-side-quote strong,.wduni-side-quote small { font-size: 20px; letter-spacing: .04em; line-height: 1.5; }
+.wduni-side-quote p br { display: none; }
+.wduni-side-quote > div { margin: 16px auto; }
+.wduni-footer { font-size: 20px; line-height: 1.5; gap: 24px; flex-wrap: wrap; }
+@media(max-width:1200px) {
+  .wduni-hero { grid-template-columns: 1fr 1fr; }
+  .wduni-feature { grid-column: 1 / -1; }
+}
+@media(max-width:700px) {
+  .wduni-hero { grid-template-columns: 1fr; }
+  .wduni-hero-copy,.wduni-feature { padding: 24px; }
+  .wduni-hero-image { min-height: 300px; }
+}
