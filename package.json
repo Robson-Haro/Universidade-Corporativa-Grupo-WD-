@@ -2,15 +2,18 @@
   "name": "universidade-corporativa-grupo-wd",
   "version": "1.0.0",
   "private": true,
-  "engines": { "node": ">=22.13.0" },
+  "engines": {
+    "node": ">=22.13.0"
+  },
   "scripts": {
-    "dev": "next dev",
+    "dev": "node scripts/dev.mjs",
     "build": "next build",
     "start": "next start",
     "lint": "eslint . --ignore-pattern .next",
     "test": "node --test test/*.test.ts"
   },
   "dependencies": {
+    "@phosphor-icons/react": "^2.1.10",
     "jspdf": "^3.0.2",
     "next": "16.2.6",
     "react": "19.2.6",
