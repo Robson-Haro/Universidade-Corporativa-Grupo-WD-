@@ -79,8 +79,8 @@ export default function FiveSCourse(){
    <div className="fs-header-course"><span>5S</span><small>UNIVERSIDADE CORPORATIVA</small></div>
    <div className="fs-header-progress"><label htmlFor="fs-progress">Prática concluída <strong>{completedPercent}%</strong></label><progress id="fs-progress" value={totalCorrect} max={14}/></div>
    <div className="fs-tools">
-    <button onClick={()=>setContrast(v=>!v)} aria-pressed={contrast} title="Alternar alto contraste" aria-label="Alternar alto contraste">{contrast?<Sun size={23}/>:<Moon size={23}/>}</button>
-    <button className="fs-menu-toggle" aria-expanded={menu} aria-controls="fs-sidebar" onClick={()=>setMenu(v=>!v)} aria-label={menu?'Fechar menu':'Abrir menu'}>{menu?<X size={25}/>:<List size={25}/>}</button>
+    <button onClick={()=>setContrast(v=>!v)} aria-pressed={contrast} title="Alternar alto contraste" aria-label="Alternar alto contraste">{contrast?<Sun size={26}/>:<Moon size={26}/>}<span>Contraste</span></button>
+    <button className="fs-menu-toggle" aria-expanded={menu} aria-controls="fs-sidebar" onClick={()=>setMenu(v=>!v)} aria-label={menu?'Fechar menu':'Abrir menu'}>{menu?<X size={28}/>:<List size={28}/>}<span>{menu?'Fechar menu':'Menu do curso'}</span></button>
    </div>
   </header>
   <div className="fs-shell">
