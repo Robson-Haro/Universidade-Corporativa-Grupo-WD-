@@ -219,7 +219,7 @@ export default function HomeClient() {
             <div className="wduni-hex-row">
               {Array.from({ length: row.count }).map((_, index) => {
                 const active = rowIndex === 0 && index === 0;
-                if ((rowIndex === 0 && index === 1) || (row.title === "Saúde, Segurança e Qualidade" && index === 0)) {
+                if ((rowIndex === 0 && index === 1) || (row.title === "Desenvolvimento Profissional" && index === 0)) {
                   return <Link key="curso-5s" href="/5s" className="wduni-course-hex wduni-course-active">
                     <div className="wduni-course-image"><img src="/images/5s-ambiente.webp" alt="Ambiente de facilities organizado" /></div>
                     <div className="wduni-course-copy"><strong>5S: Ordem que transforma</strong><small>Facilities · 7 temas · Exercícios</small></div>

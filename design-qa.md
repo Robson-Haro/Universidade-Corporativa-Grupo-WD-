@@ -27,3 +27,17 @@ Official Impeccable engine 0.1.18, playbooks source 4.8.0 used. Four initial sou
 No claim of exhaustive cross-browser/device coverage. Desktop and narrow-frame tests cover representative states. Existing local-only persistence and optional external videos unchanged.
 
 final result: passed
+
+## 2026-11-01 — Integrated 5S ice surface and professional development placement
+
+Requested correction: remove disproportionate opaque white cover bars, retain 50px headings and 30px primary reading, and place 5S in Desenvolvimento Profissional.
+
+- Before: live production cover captured and inspected at 1363px. Four nearly opaque full-width panels obscured the photographic background and fragmented the reading order.
+- After: title, subtitle, metadata, role caption and guest notice sit directly on a continuous ice veil. The question/action group uses two fine dividers, no opaque card. Lesson wrapper is transparent. Existing high-contrast control retains its accessible solid surface.
+- Preview at 1363px: computed h1/h2 50px; subtitle 30px. All four former cover panel backgrounds computed transparent. No horizontal page overflow.
+- Embedded viewport checks: 390px frame (375px content) and 768px frame (753px content), both scrollWidth equal clientWidth; headings remain50px and main copy30px. Inspected actual screenshots. Narrow view scrolls vertically as expected with requested large type.
+- First lesson and role example navigation checked in the rendered preview; existing course content unchanged.
+- Catalog condition places 5S in Desenvolvimento Profissional and keeps featured shortcut; previous Saúde, Segurança e Qualidade placement removed.
+- Build passed. Six existing tests passed. ESLint zero errors; six existing Next img optimization warnings in catalog. Impeccable detector: one existing Arial font warning, retained for scope/identity continuity; no other findings.
+- Independent source review: no blocking cascade, overflow or catalog placement findings.
+- Limit: viewport checks do not establish full accessibility compliance or browser zoom behavior.
