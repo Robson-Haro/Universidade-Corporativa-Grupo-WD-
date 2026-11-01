@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowRight, ArrowLeft, BookOpen, House, Stack, Toolbox, ClipboardText, Question, List, X, Check, PlayCircle, ArrowSquareOut, DownloadSimple, MagnifyingGlass, CheckCircle, Circle, Sun, Moon, TextAa, FloppyDisk } from '@phosphor-icons/react';
+import { ArrowRight, ArrowLeft, BookOpen, House, Stack, Toolbox, ClipboardText, Question, List, X, Check, PlayCircle, ArrowSquareOut, DownloadSimple, MagnifyingGlass, CheckCircle, Circle, Sun, Moon, FloppyDisk } from '@phosphor-icons/react';
 import { topics, stages, TOTAL_SCREENS } from '@/lib/five-s-data';
 import { assessCourse, restoreProgress, changeAnswer, type FiveSProgress } from '@/lib/five-s-progress';
 import './five-s.css';
@@ -19,7 +19,6 @@ export default function FiveSCourse(){
  const [menu,setMenu]=useState(false);
  const [role,setRole]=useState(0);
  const [selected,setSelected]=useState<Record<string,number>>({});
- const [large,setLarge]=useState(false);
  const [contrast,setContrast]=useState(false);
  const [message,setMessage]=useState('');
  const heading=useRef<HTMLHeadingElement>(null);
@@ -36,16 +35,16 @@ export default function FiveSCourse(){
    if(key){try{setProgress(restoreProgress(localStorage.getItem(key),TOTAL_SCREENS));}catch{setStorageError(true);key=null;}}
    try{
     const prefs=JSON.parse(localStorage.getItem('wd_uc_5s_display')||'{}');
-    setLarge(prefs?.large===true);setContrast(prefs?.contrast===true);
+    setContrast(prefs?.contrast===true);
    }catch{ /* Invalid display preferences do not affect course progress. */ }
    setStorageKey(key);setReady(true);
   });return()=>cancelAnimationFrame(frame);
  },[]);
  useEffect(()=>{
   if(!ready)return;
-  try{if(storageKey)localStorage.setItem(storageKey,JSON.stringify(progress));localStorage.setItem('wd_uc_5s_display',JSON.stringify({large,contrast}));}
+  try{if(storageKey)localStorage.setItem(storageKey,JSON.stringify(progress));localStorage.setItem('wd_uc_5s_display',JSON.stringify({contrast}));}
   catch{const f=requestAnimationFrame(()=>setStorageError(true));return()=>cancelAnimationFrame(f);}
- },[progress,ready,storageKey,large,contrast]);
+ },[progress,ready,storageKey,contrast]);
  const slide=progress.slide;
  const cover=slide===0;
  const final=slide===TOTAL_SCREENS-1;
@@ -72,7 +71,7 @@ export default function FiveSCourse(){
   const link=document.createElement('a');link.href=url;link.download='Plano-5S-Grupo-WD.txt';link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);setMessage('Plano exportado. Confira o arquivo nos downloads do navegador.');
  }
  const noteKey=topic.id;
- return <main className={'five-s'+(cover?' fs-cover':'')+(large?' fs-large':'')+(contrast?' fs-contrast':'')}>
+ return <main className={'five-s'+(cover?' fs-cover':'')+(contrast?' fs-contrast':'')}>
   <a className="fs-skip" href="#fs-content">Pular para o conteúdo</a>
   <div className="fs-background" aria-hidden="true"/>
   <header className="fs-header">
@@ -80,7 +79,6 @@ export default function FiveSCourse(){
    <div className="fs-header-course"><span>5S</span><small>UNIVERSIDADE CORPORATIVA</small></div>
    <div className="fs-header-progress"><label htmlFor="fs-progress">Prática concluída <strong>{completedPercent}%</strong></label><progress id="fs-progress" value={totalCorrect} max={14}/></div>
    <div className="fs-tools">
-    <button onClick={()=>setLarge(v=>!v)} aria-pressed={large} title="Ampliar texto" aria-label="Ampliar texto"><TextAa size={24}/></button>
     <button onClick={()=>setContrast(v=>!v)} aria-pressed={contrast} title="Alternar alto contraste" aria-label="Alternar alto contraste">{contrast?<Sun size={23}/>:<Moon size={23}/>}</button>
     <button className="fs-menu-toggle" aria-expanded={menu} aria-controls="fs-sidebar" onClick={()=>setMenu(v=>!v)} aria-label={menu?'Fechar menu':'Abrir menu'}>{menu?<X size={25}/>:<List size={25}/>}</button>
    </div>
@@ -95,8 +93,8 @@ export default function FiveSCourse(){
    </aside>
    <section id="fs-content" className="fs-content" aria-label="Conteúdo do curso">
     {!ready?<div className="fs-loading" role="status">Preparando sua jornada…</div>:cover?<>
-     <div className="fs-hero-copy"><p className="fs-eyebrow">QUALIDADE NO DIA A DIA</p><h1 ref={heading} tabIndex={-1}>5S: a ordem<br/>que transforma<br/>o trabalho.</h1><p className="fs-hero-subtitle">Menos procura. Mais cuidado.<br/>Melhor serviço.</p><div className="fs-hero-meta"><span>7 temas</span><span>37 telas</span><span>Prática em facilities</span></div></div>
-     <div className="fs-hero-callout"><Question size={64} weight="light"/><div><h2>Quem paga o preço<br/>da desorganização?</h2><button className="fs-primary" onClick={()=>go(1)}>Começar jornada <ArrowRight size={26}/></button></div></div>
+     <div className="fs-hero-copy"><p className="fs-eyebrow">QUALIDADE NO DIA A DIA</p><h1 ref={heading} tabIndex={-1}>5S: a ordem que transforma o trabalho.</h1><p className="fs-hero-subtitle">Menos procura. Mais cuidado. Melhor serviço.</p><div className="fs-hero-meta"><span>7 temas</span><span>37 telas</span><span>Prática em facilities</span></div></div>
+     <div className="fs-hero-callout"><Question size={64} weight="light"/><div><h2>Quem paga o preço da desorganização?</h2><button className="fs-primary" onClick={()=>go(1)}>Começar jornada <ArrowRight size={26}/></button></div></div>
      <p className="fs-hero-caption">Portaria · Limpeza · Supervisão · Ronda · Zeladoria · Recepção</p>{!storageKey?<p className="fs-guest-note"><Link href="/">Identifique-se na universidade</Link> para salvar e retomar seu avanço. Sem identificação, você pode explorar e exportar seu plano nesta sessão.</p>:null}
     </>:final?<>
      <div className="fs-breadcrumb">SUA PRÓXIMA AÇÃO <span>37 / 37</span></div>

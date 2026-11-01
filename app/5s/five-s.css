@@ -6,3 +6,25 @@
 @media(prefers-reduced-motion:reduce){.five-s *{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
 @media print{.fs-header,.fs-sidebar,.fs-stage-nav,.fs-bottom-nav,.fs-tools,.fs-background{display:none!important}.five-s,.fs-content{background:white!important;color:black!important;padding:0!important}.fs-shell{display:block}.fs-plan-form textarea{height:300px}.fs-primary{display:none!important}}
 .fs-guest-note{font-size:12px;line-height:1.6;color:var(--fs-muted);max-width:650px;margin-top:13px!important}.fs-guest-note a{text-underline-offset:3px}
+
+/* Leitura Grupo WD: 30px de conteúdo e 50px de títulos em qualquer tela. */
+:is(.five-s,.five-s.fs-large){--fs-body:30px}
+.five-s .fs-shell{display:block;min-width:0}
+.five-s .fs-content,.five-s.fs-cover .fs-content{width:100%;max-width:none;padding:32px clamp(20px,2.2vw,42px) 24px}
+.five-s .fs-sidebar{display:none}
+.five-s .fs-sidebar.is-open{display:flex;position:absolute;top:102px;left:0;width:min(320px,90vw);min-height:0;max-height:calc(100vh - 102px);overflow-y:auto;z-index:30;background:#f4f7faf5;box-shadow:12px 20px 30px #263a4d33}
+.five-s .fs-tools .fs-menu-toggle{display:grid}
+.five-s .fs-hero-copy,.five-s .fs-hero-copy h1,.five-s .fs-hero-callout,.five-s .fs-hero-callout h2,.five-s .fs-hero-caption,.five-s .fs-guest-note,.five-s .fs-lesson,.five-s .fs-theory,.five-s .fs-takeaway,.five-s .fs-method,.five-s .fs-lead,.five-s .fs-question h2,.five-s .fs-case-before h2,.five-s .fs-save-note{max-width:none;width:100%}
+:is(.five-s,.five-s.fs-large) .fs-content :is(h1,h2){font-size:50px;line-height:1.18;letter-spacing:-1px;max-width:none;text-wrap:wrap;overflow-wrap:anywhere}
+:is(.five-s,.five-s.fs-large) .fs-content :is(.fs-theory p,.fs-lead,.fs-hero-subtitle,.fs-takeaway p,.fs-method p,.fs-case-action p,.fs-case-impact p,.fs-question label,.fs-feedback p,.fs-reflection p,.fs-reflection textarea,.fs-plan-form p,.fs-plan-form textarea,.fs-references a p,.fs-references a strong,.fs-video-copy>p:not(.fs-eyebrow),.fs-summary p,.fs-summary strong,.fs-success p,.fs-pending>p,.fs-pending>button){font-size:30px;line-height:1.55}
+.five-s .fs-reflection>label,.five-s .fs-plan-form>label{font-size:50px;line-height:1.18;overflow-wrap:anywhere}
+.five-s .fs-theory p,.five-s .fs-method p,.five-s .fs-case-action p,.five-s .fs-case-impact p{text-align:justify;hyphens:auto}
+.five-s .fs-hero-copy h1{margin-top:28px;margin-bottom:22px}
+.five-s .fs-hero-callout{margin-top:36px;align-items:center}
+.five-s .fs-hero-callout>div{display:flex;align-items:center;gap:32px;min-width:0}
+.five-s .fs-hero-callout h2{flex:1;margin-bottom:0}
+.five-s .fs-hero-callout .fs-primary{width:auto;flex-shrink:0;min-width:260px}
+.five-s .fs-video{grid-template-columns:minmax(180px,22%) minmax(0,1fr)}
+.five-s .fs-method li>div,.five-s .fs-case-impact>div,.five-s .fs-question label>span{min-width:0;flex:1}
+@media(max-width:900px){.five-s .fs-sidebar.is-open{top:90px;max-height:calc(100vh - 90px)}.five-s .fs-hero-callout>div{display:block}.five-s .fs-hero-callout h2{margin-bottom:22px}.five-s .fs-hero-callout .fs-primary{width:100%;min-width:0}}
+@media(max-width:600px){.five-s .fs-sidebar.is-open{top:112px;max-height:calc(100vh - 112px)}.five-s .fs-video{grid-template-columns:minmax(0,1fr)}.five-s .fs-hero-callout{padding:24px 18px}.five-s .fs-hero-callout>svg{display:none}.five-s .fs-hero-callout>div{padding-left:0;border:0}.five-s .fs-case{padding:24px 18px}.five-s .fs-takeaway{padding:24px 18px}.five-s .fs-method li{gap:14px}.five-s .fs-question label{padding:18px 14px}.five-s .fs-question label.is-selected{padding:17px 13px}.five-s .fs-summary{align-items:flex-start}}
